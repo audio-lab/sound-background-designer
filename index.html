@@ -1,0 +1,27 @@
+<!doctype html>
+
+<title>Sound background designer</title>
+
+<link rel="stylesheet" type="text/css" href="./index.css">
+<style type="text/css">
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	* {
+		box-sizing: border-box;
+	}
+</style>
+
+<div class="sound-designer"></div>
+
+<script src="./bundle.js"></script>
+
+<script>
+	var Designer = require("sound-designer");
+
+	//Init app
+	var designer = new Designer({
+		element: document.querySelector('.sound-designer')
+	});
+</script>

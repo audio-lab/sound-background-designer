@@ -1,0 +1,44 @@
+{
+  "name": "sound-background-designer",
+  "version": "1.0.0",
+  "description": "Tiny app to design sound backgrounds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify -r ./index.js:sound-designer -d -o bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/audio-lab/sound-background-designer.git"
+  },
+  "keywords": [
+    "sound",
+    "audio",
+    "formants"
+  ],
+  "author": "Deema Yvanow <dfcreative@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/audio-lab/sound-background-designer/issues"
+  },
+  "homepage": "https://github.com/audio-lab/sound-background-designer#readme",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "audio-buffer": "^2.2.0",
+    "audio-buffer-utils": "^1.1.0",
+    "audio-context": "^0.1.0",
+    "audio-table": "^1.0.0",
+    "distributions-normal-random": "0.0.0",
+    "draggy": "^1.4.0",
+    "inherits": "^2.0.1",
+    "is-browser": "^2.0.1",
+    "mucss": "^1.1.2",
+    "pcm-util": "^2.0.1",
+    "resizable": "^1.0.5",
+    "slidy": "^0.5.19",
+    "xtend": "^4.0.1"
+  }
+}

@@ -1,0 +1,36 @@
+/**
+ * Basic styles for sound-background-designer app
+ */
+
+.sound-background-designer {
+
+}
+
+.audio-elements {
+	height: 100px;
+	width: 100%;
+	outline: 1px solid gray;
+	position: relative;
+}
+
+.audio-element {
+	position: absolute;
+	min-width: 3px;
+	height: 100%;
+	background: linear-gradient(
+		to right,
+		rgba(0,0,0,0) 0%,
+		rgba(0,0,0,0.01) 8.333%,
+		rgba(0,0,0,0.05) 16.666%,
+		rgba(0,0,0,0.13) 25%,
+		rgba(0,0,0,0.32) 33.333%,
+		rgba(0,0,0,0.62) 41.666%,
+		rgba(0,0,0,1) 50%,
+		rgba(0,0,0,0.62) 58.333%,
+		rgba(0,0,0,0.32) 66.666%,
+		rgba(0,0,0,0.13) 75%,
+		rgba(0,0,0,0.05) 83.333%,
+		rgba(0,0,0,0.01) 91.666%,
+		rgba(0,0,0,0) 100%
+	);
+}
