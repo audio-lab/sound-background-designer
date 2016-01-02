@@ -49,6 +49,14 @@ Designer.prototype.createDOM = function () {
 	self.audioElementsEl.className = 'audio-elements';
 	self.element.appendChild(self.audioElementsEl);
 
+	//by click on the constructor - add new element
+	self.audioElementsEl.addEventListener('dblclick', function (e) {
+		var f = (e.offsetX/self.audioElementsEl.offsetWidth)*20000;
+
+		self.createAudioElement(f);
+	});
+
+
 	//create formant editor
 
 	//create waveform viewer
@@ -56,16 +64,19 @@ Designer.prototype.createDOM = function () {
 	//create spectrum viewer
 
 	//create spirallogram viewer
+
 }
 
 
 /**
  * Create audioElement, add it to the table
  */
-Designer.prototype.createAudioElement = function () {
+Designer.prototype.createAudioElement = function (f) {
 	var self = this;
 
-	var audioElement = new AudioElement();
+	var audioElement = new AudioElement({
+		frequency: f || 440
+	});
 
 	self.audioElements.push(audioElement);
 
