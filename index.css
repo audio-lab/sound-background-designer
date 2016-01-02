@@ -9,14 +9,26 @@
 .audio-elements {
 	height: 100px;
 	width: 100%;
-	outline: 1px solid gray;
 	position: relative;
+	cursor: copy;
 }
 
 .audio-element {
 	position: absolute;
-	min-width: 3px;
+	min-width: 20px;
+	margin-left: -10px;
 	height: 100%;
+	cursor: move;
+}
+
+.audio-element:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 10px;
+	right: 10px;
+	bottom: 0;
+	min-width: 1px;
 	background: linear-gradient(
 		to right,
 		rgba(0,0,0,0) 0%,
@@ -33,4 +45,18 @@
 		rgba(0,0,0,0.01) 91.666%,
 		rgba(0,0,0,0) 100%
 	);
+}
+.audio-element:after {
+	content: attr(frequency);
+	position: absolute;
+	bottom: -20px;
+	height: 20px;
+	left: 50%;
+	width: 40px;
+	margin-left: -20px;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height: 20px;
+
 }
