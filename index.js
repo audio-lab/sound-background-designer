@@ -104,6 +104,8 @@ Designer.prototype.createAudioElement = function () {
 		//regenerate frequency
 		//TODO: use logarithms here
 		audioElement.frequency = f || 1;
+
+		audioElement.regenerate();
 	});
 
 
