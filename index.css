@@ -2,6 +2,8 @@
  * Basic styles for sound-background-designer app
  */
 
+@import './node_modules/slidy/index.css';
+
 .sound-background-designer {
 
 }
@@ -19,6 +21,8 @@
 	/*margin-left: -10px;*/
 	height: 100%;
 	cursor: move;
+	border: 0;
+	border-radius: 0;
 }
 
 .audio-element:before {

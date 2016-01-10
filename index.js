@@ -8,9 +8,10 @@ var extend = require('xtend/mutable');
 var inherits = require('inherits');
 var css = require('mucss/css');
 var Draggable = require('draggy');
-var Resizable = require('resizable');
+var Resizable = require('../resizable');
 var Slidy = require('../slidy');
 var registry = require('./lib/registry');
+var offset = require('mucss/offset')
 
 
 module.exports = Designer;
@@ -54,7 +55,8 @@ Designer.prototype.createDOM = function () {
 
 	//by click on the constructor - add new element
 	self.audioElementsEl.addEventListener('dblclick', function (e) {
-		var f = w2f(e.offsetX, self.audioElementsEl.offsetWidth);
+		var off = - offset(self.audioElementsEl).left + e.clientX;
+		var f = w2f(off, self.audioElementsEl.offsetWidth);
 
 		self.createAudioElement(f);
 	});
