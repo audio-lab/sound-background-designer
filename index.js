@@ -55,6 +55,8 @@ Designer.prototype.createDOM = function () {
 
 	//by click on the constructor - add new element
 	self.audioElementsEl.addEventListener('dblclick', function (e) {
+		if (document.activeElement.tagName === 'INPUT') return;
+
 		var off = - offset(self.audioElementsEl).left + e.clientX;
 		var f = w2f(off, self.audioElementsEl.offsetWidth);
 
@@ -121,9 +123,20 @@ Designer.prototype.createAudioElement = function (f) {
 	//save audioElement on the element
 	audioElementEl.audioElement = audioElement;
 
-	//keep attr for rendering
-	audioElementEl.setAttribute('frequency', audioElement.frequency.toFixed(0) + 'hz');
+	//add frequency input
+	var fInput = document.createElement('input');
+	fInput.type = 'number';
+	fInput.min = minF;
+	fInput.max = maxF;
+	fInput.className = 'audio-element-frequency';
+	fInput.step = 1;
+	fInput.value = parseInt(audioElement.frequency);
+	audioElementEl.appendChild(fInput);
 
+	//keep attr for rendering
+	fInput.addEventListener('input', function () {
+		picker.value = f2w(parseInt(fInput.value), 1);
+	});
 
 	//add slidy picker
 	var resizable = Resizable(audioElementEl, {
@@ -132,6 +145,7 @@ Designer.prototype.createAudioElement = function (f) {
 	resizable.handles.e.setAttribute('title', 'Change uncertainty');
 	resizable.handles.w.setAttribute('title', 'Change uncertainty');
 
+	//change quality on resize
 	resizable.on('resize', function () {
 		// var w = audioElementEl.offsetWidth;
 		// var left = draggable.getCoords()[0];
@@ -144,11 +158,12 @@ Designer.prototype.createAudioElement = function (f) {
 		// audioElement.setRange(fRight - fLeft);
 	});
 
-	self.slidy.addPicker(audioElementEl, {
+	var picker = self.slidy.addPicker(audioElementEl, {
 		value: f2w(audioElement.frequency, 1),
 		change: function (value) {
 			var f = w2f(value, 1);
 			audioElementEl.setAttribute('frequency', f.toFixed(0) + 'hz');
+			fInput.value = Math.round(f);
 			audioElement.frequency = f || 0;
 			audioElement.regenerate();
 		}
