@@ -16,7 +16,7 @@
 .audio-element {
 	position: absolute;
 	min-width: 20px;
-	margin-left: -10px;
+	/*margin-left: -10px;*/
 	height: 100%;
 	cursor: move;
 }

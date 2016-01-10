@@ -9,6 +9,7 @@ var inherits = require('inherits');
 var css = require('mucss/css');
 var Draggable = require('draggy');
 var Resizable = require('resizable');
+var Slidy = require('../slidy');
 var registry = require('./lib/registry');
 
 
@@ -58,6 +59,16 @@ Designer.prototype.createDOM = function () {
 		self.createAudioElement(f);
 	});
 
+	//set pallet a multiple slider
+	self.slidy = new Slidy(self.audioElementsEl, {
+		click: false,
+		point: true,
+		pickers: null,
+		min: 0,
+		max: 1,
+		step: 0.0005,
+		orientation: 'horizontal'
+	});
 
 	//create formant editor
 
@@ -103,71 +114,43 @@ Designer.prototype.createAudioElement = function (f) {
 	//create DOM representation
 	var audioElementEl = document.createElement('div');
 	audioElementEl.classList.add('audio-element');
-	self.audioElementsEl.appendChild(audioElementEl);
 	audioElementEl.setAttribute('title', 'Shift frequency');
 
 	//save audioElement on the element
 	audioElementEl.audioElement = audioElement;
+
+	//keep attr for rendering
 	audioElementEl.setAttribute('frequency', audioElement.frequency.toFixed(0) + 'hz');
 
-	//make audioElement draggable
-	var draggable = new Draggable(audioElementEl, {
-		within: self.audioElementsEl,
-		threshold: 0,
-		css3: false,
-		pin: [audioElementEl.offsetWidth / 2,0,audioElementEl.offsetWidth / 2, audioElementEl.offsetHeight ]
-	});
 
-	//set position acc to the frequency
-	draggable.move(f2w(audioElement.frequency, self.audioElementsEl.offsetWidth), 0);
-
-	//update frequency on draggable being dragged
-	draggable.on('drag', function (e) {
-		var x = draggable.getCoords()[0];
-		var f = w2f(x, self.audioElementsEl.offsetWidth);
-
-		audioElementEl.setAttribute('frequency', f.toFixed(0) + 'hz');
-
-		//regenerate frequency
-		//TODO: use logarithms here
-		audioElement.frequency = f || 1;
-
-		audioElement.regenerate();
-	});
-
-
-	//make thumbler resizable
-	var resizable = new Resizable(audioElementEl, {
-		// within: 'parent',
+	//add slidy picker
+	var resizable = Resizable(audioElementEl, {
 		handles: ['e', 'w']
 	});
 	resizable.handles.e.setAttribute('title', 'Change uncertainty');
 	resizable.handles.w.setAttribute('title', 'Change uncertainty');
 
 	resizable.on('resize', function () {
-		var w = audioElementEl.offsetWidth;
-		var left = draggable.getCoords()[0];
+		// var w = audioElementEl.offsetWidth;
+		// var left = draggable.getCoords()[0];
 
-		var range = audioElementEl.offsetWidth - 20;
+		// var range = audioElementEl.offsetWidth - 20;
 
-		var fLeft = w2f(left - range/2, self.audioElementsEl.offsetWidth);
-		var fRight = w2f(left + range/2, self.audioElementsEl.offsetWidth);
+		// var fLeft = w2f(left - range/2, self.audioElementsEl.offsetWidth);
+		// var fRight = w2f(left + range/2, self.audioElementsEl.offsetWidth);
 
-		audioElement.setRange(fRight - fLeft);
+		// audioElement.setRange(fRight - fLeft);
+	});
 
-		//set draggable pin
-		draggable.pin = [audioElementEl.offsetWidth / 2,0,audioElementEl.offsetWidth / 2, audioElementEl.offsetHeight ];
-	})
-
-	//TODO: implement this using slidy - enhance and finish slidy
-	//cover spirals etc, also debug with draggables
-	// var mixerTrack = Slidy(mixerTrackEl, {
-	// 	min: audioElement.minFrequency,
-	// 	max: audioElement.maxFrequency,
-	// 	value: audioElement.frequency,
-	// 	orientation: 'horizontal',
-	// 	picker: q('.mixer-thumb', mixerTrackEl)
-	// });
+	self.slidy.addPicker(audioElementEl, {
+		value: f2w(audioElement.frequency, 1),
+		change: function (value) {
+			var f = w2f(value, 1);
+			audioElementEl.setAttribute('frequency', f.toFixed(0) + 'hz');
+			audioElement.frequency = f || 0;
+			audioElement.regenerate();
+		}
+	});
 }
 
 
