@@ -134,7 +134,7 @@ Designer.prototype.createAudioElement = function (f) {
 	audioElementEl.appendChild(fInput);
 
 	//keep attr for rendering
-	fInput.addEventListener('input', function () {
+	fInput.addEventListener('change', function () {
 		picker.value = f2w(parseInt(fInput.value), 1);
 	});
 
